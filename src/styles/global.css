@@ -1,0 +1,96 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--c-page);
+  color: var(--c-ink);
+  font-family: var(--f-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+li,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ---- Layout primitives ------------------------------------------ */
+
+.container {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.container--chrome {
+  max-width: var(--w-chrome);
+}
+
+.container--content {
+  max-width: var(--w-content);
+}
+
+.container--heading {
+  max-width: var(--w-heading);
+}
+
+/* Hairline used for card borders (Figma "::after", 1px INSIDE) */
+.hairline {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--c-hairline);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Figma text blocks keep trailing spaces when centred — preserve them. */
+.pre {
+  white-space: pre-wrap;
+}
+/* Offset for the fixed chrome (top bar 50 + nav 88.8). Defined in CSS so the
+   value lives with the token and can never drift from the bar heights. */
+.page-main {
+  padding-top: var(--chrome-h);
+}

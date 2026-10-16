@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="ML Group">
+  <!-- ML Group monogram. Angular strokes echo the previous mark's geometry so
+       it sits naturally in the existing nav/footer lockup. -->
+  <g fill="none" stroke-width="14" stroke-linejoin="miter" stroke-linecap="butt">
+    <path d="M22 94 V26 L46 62 L70 26 V94" stroke="#1C1C1C"/>
+    <path d="M90 26 V94 H114" stroke="#FA5B05"/>
+  </g>
+</svg>

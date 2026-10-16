@@ -1,0 +1,157 @@
+[
+  {
+    "id": "about-teamwork",
+    "file": "about-teamwork.png",
+    "figmaNode": "1088:3059"
+  },
+  {
+    "id": "avatar-ava-mitchell",
+    "file": "avatar-ava-mitchell.png",
+    "figmaNode": "1088:2841"
+  },
+  {
+    "id": "avatar-emily-collins",
+    "file": "avatar-emily-collins.png",
+    "figmaNode": "1088:2937"
+  },
+  {
+    "id": "avatar-ethan-brooks",
+    "file": "avatar-ethan-brooks.png",
+    "figmaNode": "1088:2797"
+  },
+  {
+    "id": "avatar-ethan-walker",
+    "file": "avatar-ethan-walker.png",
+    "figmaNode": "1088:2885"
+  },
+  {
+    "id": "avatar-isabella-reed",
+    "file": "avatar-isabella-reed.png",
+    "figmaNode": "1088:3025"
+  },
+  {
+    "id": "avatar-james-walker",
+    "file": "avatar-james-walker.png",
+    "figmaNode": "1088:2981"
+  },
+  {
+    "id": "blog-choosing-your-fragrance-family",
+    "file": "blog-choosing-your-fragrance-family.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "blog-home-fragrance-layering-guide",
+    "file": "blog-home-fragrance-layering-guide.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "blog-how-to-care-for-a-reed-diffuser",
+    "file": "blog-how-to-care-for-a-reed-diffuser.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "category-gift-sets",
+    "file": "category-gift-sets.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "category-home-diffusers",
+    "file": "category-home-diffusers.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "category-personal-fragrance",
+    "file": "category-personal-fragrance.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "category-scented-candles",
+    "file": "category-scented-candles.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-amber-wood-edp",
+    "file": "product-amber-wood-edp.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-amber-woods-reed-diffuser",
+    "file": "product-amber-woods-reed-diffuser.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-botanical-calm-candle",
+    "file": "product-botanical-calm-candle.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-botanical-calm-fragrance-oil",
+    "file": "product-botanical-calm-fragrance-oil.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-cedar-vetiver-reed-diffuser",
+    "file": "product-cedar-vetiver-reed-diffuser.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-citrus-bloom-edt",
+    "file": "product-citrus-bloom-edt.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-fig-cedar-candle",
+    "file": "product-fig-cedar-candle.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-fragrance-refill-bottle",
+    "file": "product-fragrance-refill-bottle.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-golden-amber-candle",
+    "file": "product-golden-amber-candle.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-home-fragrance-discovery-collection",
+    "file": "product-home-fragrance-discovery-collection.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-midnight-oud-edp",
+    "file": "product-midnight-oud-edp.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-signature-discovery-set",
+    "file": "product-signature-discovery-set.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-soft-linen-reed-diffuser",
+    "file": "product-soft-linen-reed-diffuser.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-velvet-rose-edp",
+    "file": "product-velvet-rose-edp.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-white-musk-fragrance",
+    "file": "product-white-musk-fragrance.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "product-white-tea-fig-diffuser",
+    "file": "product-white-tea-fig-diffuser.jpg",
+    "source": "stock"
+  },
+  {
+    "id": "logo-mlgroup",
+    "file": "logo-mlgroup.svg",
+    "source": "brand"
+  }
+]

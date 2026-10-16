@@ -1,0 +1,187 @@
+/* ------------------------------------------------------------------
+   Design tokens — values extracted from Figma node 1088:2400
+   ("1920w light", canvas "Page 6").
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Colour */
+  --c-page: #f2f2f2;
+  --c-surface: #ffffff;
+  --c-accent: #fa5b05;
+  --c-ink: #1c1c1c;
+  --c-ink-strong: #161616;
+  --c-muted: #737373;
+  --c-muted-2: #545454;
+  --c-placeholder: #999999;
+  --c-hairline: #f2f2f2;
+  --c-field: #f2f2f2;
+  --c-dark: #161616;
+
+  /* Type families */
+  --f-sans: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --f-alt: 'Inter Variable', 'Inter', system-ui, sans-serif;
+
+  /* Layout widths (from the 1920 design) */
+  --w-chrome: 1400px; /* nav, top bar, footer inner */
+  --w-content: 1400px; /* About / Blogs */
+  --w-heading: 1200px; /* section heading blocks */
+  --w-grid: 1400px; /* Categories grid */
+  --w-products: 1200px; /* product grid */
+  --w-stack: 1760px; /* Popular Products outer */
+  --w-form: 550px; /* newsletter form */
+
+  /* Radii — Figma uses square corners everywhere except the
+     testimonial rows (r10). */
+  --r-none: 0px;
+  --r-row: 10px;
+
+  /* Shadows */
+  --sh-pill: 0 1.5657px 5.9502px rgba(0, 0, 0, 0.14);
+  --sh-badge: 0 1.5657px 5.9502px rgba(0, 0, 0, 0.14);
+
+  /* ---- Spacing scale ---------------------------------------------
+     A single 4px-based ramp. Every vertical rhythm in the layout
+     resolves to one of these steps so section padding, block gaps and
+     inline spacing stay on the same ladder instead of drifting into
+     one-off values. Desktop values are the Figma measurements; the
+     responsive file overrides the large steps downward at narrow
+     widths rather than introducing new magic numbers. */
+  --sp-0: 0px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 40px;
+  --sp-8: 48px;
+  --sp-9: 64px;
+  --sp-10: 80px;
+  --sp-11: 100px;
+  --sp-12: 128px;
+  --sp-13: 160px;
+  --sp-14: 200px;
+
+  /* Gutter between the viewport edge and a container's content. The
+     desktop value is the 1920 artboard's 80px section padding; the
+     responsive file steps this down on tablet and phone. */
+  --gutter: 80px;
+
+  /* Fixed chrome height reserved above <main> (top bar 50 + nav 88.8).
+     Kept as a token so the offset can't drift from the bar heights. */
+  --chrome-h: 138.8px;
+}
+
+/* ---- Typography scale (Figma: Geist 400 throughout, Inter for
+       stats / legal / placeholder) ---------------------------------- */
+
+.t-hero {
+  font-family: var(--f-sans);
+  font-size: 62px;
+  font-weight: 400;
+  line-height: 62px;
+  letter-spacing: -1.24px;
+  color: var(--c-ink);
+}
+
+.t-section {
+  font-family: var(--f-sans);
+  font-size: 54px;
+  font-weight: 400;
+  line-height: 54px;
+  letter-spacing: -1.08px;
+  color: var(--c-ink);
+}
+
+.t-card-h {
+  font-family: var(--f-sans);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28.8px;
+  letter-spacing: -0.48px;
+  color: var(--c-ink);
+}
+
+.t-card-title {
+  font-family: var(--f-sans);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+}
+
+.t-body {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.8px;
+  letter-spacing: 0;
+}
+
+.t-review {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  letter-spacing: -0.32px;
+}
+
+.t-meta {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.28px;
+}
+
+.t-logo {
+  font-family: var(--f-sans);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.4px;
+}
+
+.t-tagline {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18.2px;
+  letter-spacing: 0;
+}
+
+.t-stat {
+  font-family: var(--f-alt);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38.4px;
+  letter-spacing: 0;
+}
+
+.t-legal {
+  font-family: var(--f-alt);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 14.4px;
+  letter-spacing: 0;
+}
+
+.t-placeholder {
+  font-family: var(--f-alt);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.943px;
+  letter-spacing: 0;
+}
+
+.accent {
+  color: var(--c-accent);
+}
+
+.muted {
+  color: var(--c-muted);
+}
+
+.muted-2 {
+  color: var(--c-muted-2);
+}

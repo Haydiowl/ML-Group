@@ -1,0 +1,590 @@
+/* ------------------------------------------------------------------
+   Motion safety.
+
+   Two guarantees:
+   1. If motion never runs (JS disabled, bundle blocked, render error), every
+      animated element renders at its natural resting state — visible, in
+      position. The hidden start states are applied by Motion at runtime,
+      never by this stylesheet.
+   2. Under prefers-reduced-motion the page is fully readable and all content
+      is visible; transitions collapse to zero rather than elements hiding.
+   ------------------------------------------------------------------ */
+
+.marquee-track {
+  display: flex;
+  will-change: transform;
+}
+
+/* Only the continuously-running animations are promoted for the whole page
+   life. One-shot entrances promote themselves from JS for the duration of the
+   animation (see Reveal) and demote on completion — a blanket will-change here
+   would keep dozens of GPU layers alive permanently. */
+.testi-track {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  /* The testimonial rows are continuous motion, so under reduced-motion they
+     hold still instead of scrolling. */
+  .testi-track--left,
+  .testi-track--right {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .heading-reveal,
+  .stack-reveal,
+  .stat,
+  .team-img,
+  .product-card,
+  .blog-card,
+  .testi-card,
+  .category-card,
+  .about-cta,
+  .blogs-cta,
+  .testi-track {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+
+  /* Hover feedback is retained — it is a colour change, not motion. */
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hover — only the two the reference actually implements. */
+
+/* Category card: background → accent */
+.category-card {
+  transition: background-color 0.15s linear;
+}
+.category-card:hover,
+.category-card:focus-visible {
+  background: var(--c-accent);
+}
+
+/* Blog card: title → accent, two children dim to 0.75 */
+.blog-card .blog-card-title {
+  transition: color 0.15s linear;
+}
+.blog-card:hover .blog-card-title,
+.blog-card:focus-visible .blog-card-title {
+  color: var(--c-accent);
+}
+.blog-card:hover > div:first-child,
+.blog-card:focus-visible > div:first-child {
+  opacity: 0.75;
+}
+.blog-card > div:first-child {
+  transition: opacity 0.15s linear;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+/* If the animation layer throws, force every animated child visible. */
+.motion-fallback *,
+.motion-fallback {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* ==================================================================
+   Storefront additions: currency selector, cart trigger, cart panel.
+   Built from existing tokens so they inherit the established palette,
+   radii and type scale rather than introducing a new look.
+   ================================================================== */
+
+/* --- Nav: action cluster ------------------------------------------ */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Currency selector -------------------------------------------- */
+.currency-select {
+  position: relative;
+}
+
+.currency-trigger {
+  height: 36.8px;
+  padding: 8px 12px;
+  border: 1px solid var(--c-hairline);
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-alt);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.currency-trigger:hover,
+.currency-trigger:focus-visible {
+  border-color: var(--c-ink);
+  outline: none;
+}
+
+.currency-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 60;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  min-width: 116px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+}
+
+.currency-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-alt);
+  cursor: pointer;
+  text-align: left;
+}
+
+.currency-opt:hover,
+.currency-opt:focus-visible {
+  background: var(--c-surface);
+  outline: none;
+}
+
+.currency-opt.is-active {
+  color: var(--c-accent);
+}
+
+.currency-sym {
+  color: var(--c-muted);
+}
+
+/* --- Cart trigger + badge ----------------------------------------- */
+.cart-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36.8px;
+  height: 36.8px;
+  border: 1px solid var(--c-hairline);
+  background: transparent;
+  color: var(--c-ink);
+  cursor: pointer;
+}
+
+.cart-trigger:hover,
+.cart-trigger:focus-visible {
+  border-color: var(--c-ink);
+  outline: none;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-accent);
+  color: #fff;
+  font-family: var(--f-alt);
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* --- Cart panel ---------------------------------------------------- */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.cart-scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: rgba(28, 28, 28, 0.32);
+  cursor: pointer;
+}
+
+.cart-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(400px, 100vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--c-surface);
+  border-left: 1px solid var(--c-hairline);
+  animation: cart-in 200ms ease-out;
+}
+
+@keyframes cart-in {
+  from {
+    transform: translate3d(16px, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.cart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+.cart-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-close:hover,
+.cart-close:focus-visible {
+  outline: none;
+  color: var(--c-accent);
+}
+
+.cart-empty {
+  padding: 24px 20px;
+}
+
+.cart-lines {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.cart-line {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+.cart-thumb {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  object-fit: cover;
+}
+
+.cart-line-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-line-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.cart-qty button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--c-hairline);
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-qty button:hover,
+.cart-qty button:focus-visible {
+  border-color: var(--c-ink);
+  outline: none;
+}
+
+.cart-line-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  flex: none;
+}
+
+.cart-remove {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.cart-remove:hover,
+.cart-remove:focus-visible {
+  outline: none;
+  color: var(--c-accent);
+}
+
+.cart-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid var(--c-hairline);
+}
+
+.cart-subtotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-note {
+  margin: 0;
+}
+
+.cart-checkout {
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--f-alt);
+}
+
+.cart-clear {
+  border: 0;
+  background: transparent;
+  color: var(--c-muted);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.cart-clear:hover,
+.cart-clear:focus-visible {
+  outline: none;
+  color: var(--c-accent);
+}
+
+/* Visually hidden but announced. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-panel {
+    animation: none;
+  }
+}
+
+/* ==================================================================
+   Mobile navigation
+   The desktop nav links are display:none below 640px, so this panel is
+   the only route to them on a phone. It uses the same surface, hairline
+   and type tokens as the cart panel.
+   ================================================================== */
+
+.menu-trigger {
+  height: 36.8px;
+  padding: 8px 10px;
+  border: 1px solid var(--c-hairline);
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-alt);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu-trigger:hover,
+.menu-trigger:focus-visible {
+  border-color: var(--c-ink);
+  outline: none;
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+}
+
+.mobile-menu-scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: rgba(28, 28, 28, 0.32);
+  cursor: pointer;
+}
+
+.mobile-menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(340px, 100vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--c-surface);
+  border-left: 1px solid var(--c-hairline);
+  animation: cart-in 200ms ease-out;
+}
+
+.mobile-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+.menu-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-close:hover,
+.menu-close:focus-visible {
+  outline: none;
+  color: var(--c-accent);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-2) 0;
+}
+
+.mobile-menu-links a {
+  display: block;
+  padding: var(--sp-4) 20px;
+  color: var(--c-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+.mobile-menu-links a:hover,
+.mobile-menu-links a:focus-visible {
+  background: var(--c-surface);
+  color: var(--c-accent);
+  outline: none;
+}
+
+.mobile-menu-cta {
+  margin-top: auto;
+  padding: 20px;
+}
+
+.mobile-menu-cta .pill {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==================================================================
+   Nav link + logo
+   The nav Pill variant no longer draws a stroke, so hover feedback is
+   carried by colour and a light surface fill instead of a border.
+   ================================================================== */
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.nav-logo img {
+  display: block;
+  transition: opacity 180ms ease;
+}
+
+.nav-logo:hover img,
+.nav-logo:focus-visible img {
+  opacity: 0.7;
+}
+
+.nav-logo:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 4px;
+}
+
+.nav-link {
+  padding: 8px 10px;
+  border-radius: 0;
+  color: var(--c-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--c-accent);
+  background: var(--c-surface);
+  outline: none;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link:focus-visible {
+  color: var(--c-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .nav-logo img {
+    transition: none;
+  }
+}

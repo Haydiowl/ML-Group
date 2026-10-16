@@ -1,0 +1,735 @@
+/* ------------------------------------------------------------------
+   Responsive rules.
+
+   Figma supplies only the 1920 desktop artboard (node 1088:2400). Above
+   1100px the layout uses the exact pixel values from that artboard. The
+   rules below only kick in below that, following the reference template's
+   own breakpoints (Framer: default / 810 / 390).
+   ------------------------------------------------------------------ */
+
+/* Base desktop values (Figma 1920 artboard) — overridden below 1100px
+
+   The band is content-height so the photograph sits flush against the top of
+   the card with no white gap above it; `display:block` stops the old flex
+   centring from re-introducing one. */
+.prod-imgband {
+  height: auto;
+  display: block;
+  overflow: hidden;
+}
+
+/* Product grid — 3 × 395 with 8px gaps, matching the 1920 artboard. Declared
+   once here so the homepage and every category page resolve to the same
+   track count instead of one page hard-coding it inline. */
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-2);
+}
+
+/* Name and price sit on one line. The name truncates rather than wrapping so
+   prices stay aligned across the whole row. */
+.product-name {
+  color: var(--c-ink-strong);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-price {
+  flex: none;
+  white-space: nowrap;
+}
+
+.product-detail {
+  display: block;
+  margin-top: 4px;
+}
+
+/* Hover: the white panel beneath the image takes the brand colour, and its
+   text flips to white for contrast. The photograph itself is untouched. */
+.product-card:hover .product-info,
+.product-card:focus-visible .product-info {
+  background: var(--c-accent);
+  transition: background-color 180ms ease;
+}
+
+.product-card:hover .product-name,
+.product-card:focus-visible .product-name {
+  color: #fff;
+}
+
+/* The price sits on the same orange panel, so it has to flip too — it was
+   staying dark and reading black-on-orange. */
+.product-card:hover .product-price,
+.product-card:focus-visible .product-price {
+  color: #fff;
+}
+
+.product-card:hover .product-detail,
+.product-card:focus-visible .product-detail {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Full-bleed testimonial track — anchored at the frame edge (Figma) */
+.testi-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 8px;
+  will-change: transform;
+}
+
+/* ---- Self-running testimonial rows ----------------------------------
+   Each row scrolls continuously on its own, the two rows in opposite
+   directions. The track holds two copies of the card set, so travelling
+   exactly −50% lands on the start of copy two, which is pixel-identical to
+   the start of copy one — the reset is invisible and there is never a gap.
+
+   Row 1 travels left, row 2 travels right. */
+.testi-track--left {
+  animation: testi-scroll-left 48s linear infinite;
+}
+
+.testi-track--right {
+  animation: testi-scroll-right 48s linear infinite;
+}
+
+@keyframes testi-scroll-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes testi-scroll-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.menu-toggle {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  /* Images become proportional so cards reflow without fixed heights. */
+  .cat-img,
+  .grid-products .prod-img {
+    height: auto !important;
+    aspect-ratio: 696 / 578.69;
+    object-fit: cover;
+  }
+
+  .grid-blogs .blog-img {
+    height: auto !important;
+    aspect-ratio: 459 / 300;
+    object-fit: cover;
+  }
+
+  /* The About image carries an inline width:696 from the Figma frame. Once
+     .team switches to a column that fixed width overflows narrow viewports,
+     so it must be released here and driven by the container instead. */
+  .team-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    height: auto !important;
+    aspect-ratio: 696 / 400;
+    object-fit: cover;
+  }
+
+  .team-img img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .grid-blogs {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .team {
+    flex-direction: column !important;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 810px) {
+  .h-hero {
+    font-size: 44px !important;
+    line-height: 46px !important;
+    letter-spacing: -0.88px !important;
+  }
+
+  .h-section {
+    font-size: 36px !important;
+    line-height: 39px !important;
+    letter-spacing: -0.72px !important;
+  }
+
+  .h-card {
+    font-size: 21px !important;
+    line-height: 25px !important;
+    letter-spacing: -0.42px !important;
+  }
+
+  .grid-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .prod-imgband {
+    height: auto !important;
+  }
+
+  .testi-row {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .testi-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testi-track {
+    padding-left: 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-links {
+    display: none !important;
+  }
+
+  /* The reference collapses the bar to the logo alone below ~834px. The
+     Join Newsletter pill is nowrap, so keeping it here pushes the document
+     past the viewport at 320px. */
+  .nav-cta {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: inline-flex !important;
+    margin-left: auto !important;
+  }
+
+  /* Inline width:250 from the Figma frame would overflow narrow viewports. */
+  .t-tagline {
+    width: 100% !important;
+    max-width: 250px;
+  }
+
+  .grid-categories,
+  .grid-products,
+  .grid-blogs,
+  .stats {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .grid-products .prod-img {
+    aspect-ratio: 1 !important;
+  }
+
+  .footer-cols {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+
+  .footer-left,
+  .footer-right {
+    width: 100% !important;
+  }
+
+  .footer-right {
+    gap: 24px !important;
+    flex-wrap: wrap;
+  }
+
+  .testi-card {
+    width: calc(100vw - 40px) !important;
+    height: auto !important;
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .h-hero {
+    font-size: 36px !important;
+    line-height: 38px !important;
+    letter-spacing: -0.72px !important;
+  }
+
+  .h-section {
+    font-size: 30px !important;
+    line-height: 33px !important;
+    letter-spacing: -0.6px !important;
+  }
+}
+/* Container applies its gutter at every nesting level, and the product grid
+   nests two Containers. On a 390px viewport that compounds to 320px of
+   padding and leaves a 70px card, which clips longer product names. The
+   reference uses ~20px gutters at this width. Desktop is untouched. */
+@media (max-width: 810px) {
+  .container {
+    padding-inline: 24px !important;
+  }
+}
+
+/* Storefront additions: the currency selector and cart trigger join the
+   top-bar action cluster, and the catalogue shows 16 products rather than 12,
+   so the existing ≤640 rule that hides the newsletter CTA has to take the
+   new controls into account too. */
+@media (max-width: 640px) {
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .cart-trigger {
+    width: 36px;
+    height: 36px;
+  }
+
+  .currency-trigger {
+    padding: 8px 10px;
+  }
+}
+
+/* ==================================================================
+   Spacing scale — responsive steps
+   The scale itself lives in tokens.css. These blocks step the large
+   values down on narrower viewports so the vertical rhythm stays
+   proportional instead of leaving a full desktop gap on a phone.
+
+   The old `main` offset (138.8px) plus the hero section's 200px
+   padding meant ~339px of dead space above the first heading on a
+   390px screen. The steps below bring that back to a sane ~150px.
+   ================================================================== */
+
+@media (max-width: 1100px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+@media (max-width: 810px) {
+  :root {
+    --gutter: 24px;
+    --sp-14: 120px;
+    --sp-13: 96px;
+    --sp-12: 80px;
+    --sp-11: 72px;
+    --sp-10: 56px;
+    --sp-9: 48px;
+    --sp-8: 40px;
+  }
+
+}
+
+@media (max-width: 640px) {
+  :root {
+    --sp-14: 88px;
+    --sp-13: 72px;
+    --sp-12: 64px;
+    --sp-11: 56px;
+    --sp-10: 48px;
+    --sp-9: 40px;
+    --sp-8: 32px;
+  }
+
+}
+
+/* Product cards are <button> elements (they act as add-to-cart targets), so
+   they need the native control styling reset out before the card styles
+   apply. Without this the browser adds a border, a centred default font and
+   its own focus ring. */
+.product-card {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+
+.product-card:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* ==================================================================
+   Route pages: product detail + category listing
+   Built from the same tokens as the homepage — same container widths,
+   same type classes, same hairline/radius language. Nothing here
+   introduces a new colour, font or spacing step.
+   ================================================================== */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding: var(--sp-8) 0 var(--sp-6);
+}
+
+.breadcrumb a {
+  color: var(--c-ink);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  color: var(--c-accent);
+  outline: none;
+}
+
+/* ---- Product detail ------------------------------------------------ */
+.pdp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-9);
+  align-items: start;
+  padding-bottom: var(--sp-10);
+}
+
+.pdp-media {
+  position: relative;
+  /* Pin the photograph while the right-hand column scrolls. Sticky (not
+     fixed) so it stops at the end of the section instead of floating over
+     the rest of the page. */
+  position: sticky;
+  top: calc(var(--sp-9) + 40px);
+  align-self: start;
+}
+
+@media (max-width: 810px) {
+  .pdp-media {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* ---- Collapsible sections ---------------------------------------- */
+
+/* Every block in the detail column is separated by one uniform gap set on
+   .pdp-info. Individual margins are zeroed so they cannot add to it and
+   reintroduce uneven spacing. */
+.pdp-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.pdp-actions,
+.pdp-collapsibles {
+  margin-bottom: 0;
+}
+
+.collapse {
+  border: 1px solid var(--c-hairline);
+  background: var(--c-surface);
+  margin-bottom: 0;
+}
+
+.collapse-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  width: 100%;
+  padding: var(--sp-5);
+  border: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-alt);
+  text-align: left;
+  cursor: pointer;
+}
+
+.collapse-head:hover {
+  color: var(--c-accent);
+}
+
+.collapse-head:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: -2px;
+}
+
+.collapse-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--c-muted-2);
+  transition: transform 180ms ease;
+}
+
+.collapse.is-open .collapse-icon {
+  transform: rotate(180deg);
+  color: var(--c-accent);
+}
+
+.collapse-inner {
+  padding: 0 var(--sp-5) var(--sp-5);
+}
+
+/* Inside a panel the spec list no longer needs its own top rule. */
+.collapse .pdp-spec-list {
+  padding-top: 0;
+  border-top: 0;
+  margin-bottom: 0;
+}
+
+.collapse .pdp-desc,
+.collapse .pdp-notes {
+  margin-bottom: 0;
+}
+
+.pdp-figure {
+  height: 100%;
+}
+
+.pdp-title {
+  margin: var(--sp-2) 0 var(--sp-4);
+  text-align: left;
+}
+
+.pdp-price-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+
+/* Small breathing room above the action block only — the uniform column gap
+   handles everything below it. */
+
+.pdp-price {
+  font-size: 24px;
+}
+
+.pdp-short {
+  margin: 0;
+}
+
+.pdp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.pdp-qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.pdp-qty .cart-qty {
+  margin-top: 0;
+}
+
+.pdp-qty .cart-qty button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pdp-buttons {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.pdp-buttons .pill {
+  flex: 1 1 160px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pdp-spec-title {
+  margin: 0 0 var(--sp-4);
+}
+
+.pdp-spec-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4) var(--sp-6);
+  border-top: 1px solid var(--c-hairline);
+  padding-top: var(--sp-5);
+}
+
+.pdp-spec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.pdp-spec dd {
+  margin: 0;
+}
+
+.pdp-desc {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.pdp-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin: 0;
+}
+
+.pdp-note-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: var(--sp-4);
+}
+
+.pdp-related {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Category + related cards sit inset from their own border, so the
+   photograph is not flush to the card edge. Scoped to these listings —
+   the homepage product card keeps its existing full-bleed treatment. */
+.grid-products .product-card.inset-card {
+  padding: var(--sp-3);
+}
+
+.inset-card .product-info {
+  padding: var(--sp-4) var(--sp-2) var(--sp-2);
+  border-radius: 0;
+}
+
+.inset-card .prod-imgband {
+  border-radius: 0;
+}
+
+/* ---- Category listing --------------------------------------------- */
+/* Heading block first, banner image full-bleed beneath it. */
+.cat-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+  padding-bottom: var(--sp-10);
+}
+
+.cat-hero-copy {
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cat-hero-media {
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+}
+
+.cat-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--sp-6);
+}
+
+.cat-sorts {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.cat-sort {
+  border: 1px solid var(--c-hairline);
+  background: transparent;
+  color: var(--c-ink);
+  padding: 8px 10px;
+  cursor: pointer;
+  font-family: var(--f-alt);
+  white-space: nowrap;
+}
+
+.cat-sort[aria-pressed='true'] {
+  background: var(--c-surface);
+  border-color: var(--c-accent);
+}
+
+.cat-sort:hover,
+.cat-sort:focus-visible {
+  border-color: var(--c-ink);
+  outline: none;
+}
+
+.cat-empty {
+  padding: var(--sp-11) 0;
+}
+
+/* ---- 404 ----------------------------------------------------------- */
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  max-width: 560px;
+}
+
+.notfound-title {
+  margin: 0;
+}
+
+.notfound-sub code {
+  font-family: var(--f-alt);
+}
+
+.notfound-cta {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: var(--sp-4);
+  text-decoration: none;
+}
+
+@media (max-width: 810px) {
+  .pdp {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-8);
+  }
+
+  .cat-hero-media {
+    height: 300px;
+  }
+
+  .pdp-related {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .pdp-spec-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pdp-related {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cat-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
